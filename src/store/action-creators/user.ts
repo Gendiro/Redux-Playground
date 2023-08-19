@@ -1,23 +1,15 @@
-import type { Dispatch } from "redux";
-import { UserAction, UserActionTypes } from "../../types/user";
+import { UserItem } from "../../types/user";
 import axios from "axios";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const fetchUsers = () => {
-  return async (dispatch: Dispatch<UserAction>) => {
-    try {
-      dispatch({ type: UserActionTypes.FETCH_USERS, error: null, users: [] });
-      const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      dispatch({
-        type: UserActionTypes.FETCH_UESRS_SUCCESS,
-        payload: response.data,
-      });
-    } catch (e) {
-      dispatch({
-        type: UserActionTypes.FETCH_USERS_ERROR,
-        payload: "Error while fetching users",
-      });
+export const fetchUsers = createAsyncThunk(
+    'user/fetchAll',
+    async (_, thunkAPI) => {
+      try {
+          const response = await axios.get<UserItem[]>("https://jsonplaceholder.typicode.com/users");
+          return response.data;
+      } catch (e) {
+          return thunkAPI.rejectWithValue(String(e));
+      }
     }
-  };
-};
+)

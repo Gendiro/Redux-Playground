@@ -1,5 +1,5 @@
 import type React from "react";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useTypedSelector } from "../hooks/redux";
 import { useActions } from "../hooks/useActions";
 import { useEffect } from "react";
 import Pagination from "./Pagination";

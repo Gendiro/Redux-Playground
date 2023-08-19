@@ -1,4 +1,6 @@
-import { UserState, UserAction, UserActionTypes } from "../../types/user";
+import {UserState, UserItem} from "../../types/user";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {fetchUsers} from "../action-creators/user.ts";
 
 const initialState: UserState = {
   users: [],
@@ -6,18 +8,26 @@ const initialState: UserState = {
   error: null,
 };
 
-export const userReducer = (
-  state = initialState,
-  action: UserAction
-): UserState => {
-  switch (action.type) {
-    case UserActionTypes.FETCH_USERS:
-      return { loading: true, error: null, users: [] };
-    case UserActionTypes.FETCH_UESRS_SUCCESS:
-      return { loading: false, error: null, users: action.payload };
-    case UserActionTypes.FETCH_USERS_ERROR:
-      return { loading: false, error: action.payload, users: [] };
-    default:
-      return state;
-  }
-};
+export const userSlice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {
+    },
+    extraReducers: {
+        [fetchUsers.pending.type]: (state) => {
+            state.loading = true;
+            state.error = null;
+            state.users = [];
+        },
+        [fetchUsers.fulfilled.type]: (state, action: PayloadAction<UserItem[]>) => {
+            state.loading = false;
+            state.error = null;
+            state.users = action.payload;
+        },
+        [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.loading = false;
+            state.error = action.payload;
+            state.users = [];
+        }
+    }
+});

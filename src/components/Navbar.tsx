@@ -24,6 +24,7 @@ let Navbar: React.FC<NavbarProps> = ({
           return (
             <button
               key={option}
+              className={"hover:font-[600]"}
               onClick={() => {
                 onChangeOption && onChangeOption(option);
               }}

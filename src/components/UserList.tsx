@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import { useTypedSelector } from "../hooks/useTypedSelector";
-import type {} from "redux-thunk/extend-redux";
-import { useActions } from "../hooks/useActions";
+import {useTypedDispatch, useTypedSelector} from "../hooks/redux";
 import LoadingCircle from "./LoadingCircle";
+import {fetchUsers} from "../store/action-creators/user.ts";
 
 const UserList: React.FC = () => {
   const { users, error, loading } = useTypedSelector((state) => state.user);
-  const { fetchUsers } = useActions();
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsers()).then();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {

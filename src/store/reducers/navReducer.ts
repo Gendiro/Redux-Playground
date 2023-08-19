@@ -1,17 +1,18 @@
-import { NavAction, NavActions, NavState } from "../../types/nav";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { NavState } from "../../types/nav";
 
 const initialState: NavState = {
-  currentPage: "users",
+  currentPage: "posts",
 };
 
-export const navReducer = (
-  state: NavState = initialState,
-  action: NavAction
-): NavState => {
-  switch (action.type) {
-    case NavActions.SET_CURRENT_PAGE:
-      return { ...state, currentPage: action.payload };
-    default:
-      return state;
-  }
-};
+export const navSlice = createSlice({
+  name: "nav",
+  initialState,
+  reducers: {
+    setCurrentPage(state, action: PayloadAction<string>) {
+      state.currentPage = action.payload;
+    },
+  },
+});
+
+export default navSlice.reducer;
