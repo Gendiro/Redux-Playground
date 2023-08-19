@@ -35,7 +35,7 @@ const PostList: React.FC = () => {
     }
 
     if (error) {
-        return <div>Error occurred</div>;
+        return <div className="w-4/6 h-full text-center text-red-500 text-2xl mx-auto m-10">If you're seeing this, you're probably watching the deployed project. This particular page uses local json-server to setup the REST API for the RTK Query to work with, so it won't work with github pages. <br/> Consult with README for further info.</div>;
     }
 
     return <div className = "grid grid-cols-3 w-5/6 gap-6 mx-auto">
